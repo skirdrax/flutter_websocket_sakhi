@@ -6,22 +6,23 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   late WebSocketChannel channel;
   final TextEditingController controller = TextEditingController();
-  List<String> messages = []; // Menyimpan semua pesan
+  List<String> messages = [];
 
   @override
   void initState() {
     super.initState();
 
-    channel = WebSocketChannel.connect(Uri.parse("wss://wssimple.arincov.com"));
+    channel = WebSocketChannel.connect(Uri.parse('wss://wssimple.arinov.com'));
 
-    // Listen message
     channel.stream.listen((event) {
       setState(() {
         messages.add(event.toString());
@@ -40,36 +41,54 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text("WebSocket ListView Example")),
+        appBar: AppBar(
+          title: const Text('WebSocket ListView Example'),
+          backgroundColor: Colors.blueAccent,
+        ),
         body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              // Menampilkan daftar pesan
               Expanded(
                 child: ListView.builder(
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
-                    return ListTile(title: Text(messages[index]));
+                    return ListTile(
+                      title: Text(messages[index]),
+                      leading: const Icon(Icons.message, color: Colors.blue),
+                    );
                   },
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
+
+              // Input field untuk mengirim pesan
               TextField(
                 controller: controller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Kirim pesan",
+                  labelText: 'Kirim pesan',
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
+
+              // Tombol Kirim
               ElevatedButton(
                 onPressed: () {
-                  if (controller.text.isNotEmpty) {
-                    channel.sink.add(controller.text);
+                  final text = controller.text;
+                  if (text.isNotEmpty) {
+                    channel.sink.add(text); // Kirim pesan ke server
                     controller.clear();
                   }
                 },
-                child: Text("Kirim"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                ),
+                child: const Text(
+                  'Kirim',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
