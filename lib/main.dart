@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('WebSocket ListView Example'),
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: const Color.fromARGB(255, 12, 145, 81),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -56,7 +56,10 @@ class _MyAppState extends State<MyApp> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: Text(messages[index]),
-                      leading: const Icon(Icons.message, color: Colors.blue),
+                      leading: const Icon(
+                        Icons.message,
+                        color: Color.fromARGB(255, 12, 155, 162),
+                      ),
                     );
                   },
                 ),
@@ -83,7 +86,7 @@ class _MyAppState extends State<MyApp> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
+                  backgroundColor: const Color.fromARGB(255, 13, 168, 103),
                 ),
                 child: const Text(
                   'Kirim',
